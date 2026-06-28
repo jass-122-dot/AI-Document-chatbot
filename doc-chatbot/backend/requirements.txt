@@ -1,0 +1,9 @@
+flask
+flask-cors
+flask-jwt-extended
+python-dotenv
+bcrypt
+google-generativeai
+chromadb
+PyPDF2
+sentence-transformers
