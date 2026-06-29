@@ -1,35 +1,12 @@
-from flask import Blueprint, request, jsonify  # type: ignore[import]
-from flask_jwt_extended import get_jwt_identity, jwt_required  # type: ignore[reportMissingImports]
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from database import get_db
 from config import Config
 import os
 import uuid
-import importlib
-
-Groq = None
-try:
-    groq_module = importlib.import_module('groq')
-    Groq = getattr(groq_module, 'Groq')
-except ImportError:
-    raise ImportError('groq package is required for chat completions.')
-
-try:
-    chromadb = importlib.import_module('chromadb')
-except ImportError:
-    raise ImportError('chromadb package is required for document embedding and retrieval.')
-
-
-PdfReader = None
-for _module in ('PyPDF2', 'pypdf'):
-    try:
-        module = importlib.import_module(_module)
-        PdfReader = getattr(module, 'PdfReader')
-        break
-    except (ImportError, AttributeError):
-        continue
-
-if PdfReader is None:
-    raise ImportError('No supported PDF reader installed.')
+import PyPDF2
+from groq import Groq
+import chromadb
 
 docs_bp = Blueprint('docs', __name__)
 
@@ -45,7 +22,7 @@ def get_or_create_collection(name):
 def extract_text_from_pdf(filepath):
     text = ""
     with open(filepath, 'rb') as f:
-        reader = PdfReader(f)
+        reader = PyPDF2.PdfReader(f)
         for page in reader.pages:
             text += page.extract_text() or ""
     return text
