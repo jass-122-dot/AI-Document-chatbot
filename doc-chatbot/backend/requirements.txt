@@ -6,5 +6,5 @@ bcrypt
 google-generativeai
 chromadb
 PyPDF2
-sentence-transformers
+groq
 gunicorn
