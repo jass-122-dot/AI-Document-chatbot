@@ -19,6 +19,8 @@ def add_cors_headers(response):
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(docs_bp, url_prefix='/api/docs')
 
-if __name__ == '__main__':
+with app.app_context():
     init_db()
+
+if __name__ == '__main__':
     app.run(debug=True)
