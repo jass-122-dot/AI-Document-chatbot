@@ -5,7 +5,7 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
   const password = document.getElementById("password").value;
   const errorMsg = document.getElementById("error-msg");
 
-  fetch("http://127.0.0.1:5000/api/auth/register", {
+  fetch("https://ai-document-chatbot-m18i.onrender.com/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
@@ -13,7 +13,7 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
     .then((r) => r.json())
     .then((data) => {
       if (data.message) {
-        fetch("http://127.0.0.1:5000/api/auth/login", {
+        fetch("https://ai-document-chatbot-m18i.onrender.com/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),

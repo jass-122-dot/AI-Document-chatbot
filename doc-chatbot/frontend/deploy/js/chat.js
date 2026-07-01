@@ -11,7 +11,7 @@ document.getElementById("username").textContent = name;
 document.getElementById("doc-name").textContent = docName;
 
 function loadHistory() {
-  fetch("http://127.0.0.1:5000/api/docs/history/" + docId, {
+  fetch("https://ai-document-chatbot-m18i.onrender.com/api/docs/history/" + docId, {
     headers: { Authorization: "Bearer " + token },
   })
     .then((r) => r.json())
@@ -42,7 +42,7 @@ function sendMessage() {
   chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
 
-  fetch("http://127.0.0.1:5000/api/docs/chat", {
+  fetch("https://ai-document-chatbot-m18i.onrender.com/api/docs/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

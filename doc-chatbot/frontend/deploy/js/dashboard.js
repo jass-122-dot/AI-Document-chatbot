@@ -8,7 +8,7 @@ if (!token) {
 document.getElementById("username").textContent = name;
 
 function loadDocuments() {
-  fetch("http://127.0.0.1:5000/api/docs/list", {
+  fetch("https://ai-document-chatbot-m18i.onrender.com/api/docs/list", {
     headers: { Authorization: "Bearer " + token },
   })
     .then((r) => r.json())
@@ -47,7 +47,7 @@ function uploadDocument() {
   const formData = new FormData();
   formData.append("file", file);
 
-  fetch("http://127.0.0.1:5000/api/docs/upload", {
+  fetch("https://ai-document-chatbot-m18i.onrender.com/api/docs/upload", {
     method: "POST",
     headers: { Authorization: "Bearer " + token },
     body: formData,
@@ -75,7 +75,7 @@ function openChat(docId, docName) {
 
 function deleteDoc(docId) {
   if (confirm("Delete this document and all its chat history?")) {
-    fetch("http://127.0.0.1:5000/api/docs/delete/" + docId, {
+    fetch("https://ai-document-chatbot-m18i.onrender.com/api/docs/delete/" + docId, {
       method: "DELETE",
       headers: { Authorization: "Bearer " + token },
     })
