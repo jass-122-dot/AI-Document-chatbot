@@ -19,6 +19,10 @@ def add_cors_headers(response):
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(docs_bp, url_prefix='/api/docs')
 
+@app.route('/')
+def home():
+    return {"message": "AI Document Chatbot API is running!", "status": "ok"}
+
 with app.app_context():
     init_db()
 
