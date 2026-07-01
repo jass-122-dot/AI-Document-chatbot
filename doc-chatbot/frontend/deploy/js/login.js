@@ -4,7 +4,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const password = document.getElementById("password").value;
   const errorMsg = document.getElementById("error-msg");
 
-  fetch("https://ai-document-chatbot-a0pk.onrender.com/api/auth/login", {
+  fetch("http://127.0.0.1:5000/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

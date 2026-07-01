@@ -11,20 +11,16 @@ document.getElementById("username").textContent = name;
 document.getElementById("doc-name").textContent = docName;
 
 function loadHistory() {
-  fetch(
-    "https://ai-document-chatbot-a0pk.onrender.com/api/docs/history/" + docId,
-    {
-      headers: { Authorization: "Bearer " + token },
-    },
-  )
+  fetch("http://127.0.0.1:5000/api/docs/history/" + docId, {
+    headers: { Authorization: "Bearer " + token },
+  })
     .then((r) => r.json())
     .then((history) => {
       if (!Array.isArray(history)) return;
       const chatBox = document.getElementById("chat-box");
       chatBox.innerHTML = "";
       if (history.length === 0) {
-        chatBox.innerHTML =
-          '<div class="message bot">Hello! Ask me anything about this document.</div>';
+        chatBox.innerHTML = '<div class="message bot">Hello! Ask me anything about this document.</div>';
         return;
       }
       history.forEach((h) => {
@@ -46,7 +42,7 @@ function sendMessage() {
   chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
 
-  fetch("https://ai-document-chatbot-a0pk.onrender.com/api/docs/chat", {
+  fetch("http://127.0.0.1:5000/api/docs/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

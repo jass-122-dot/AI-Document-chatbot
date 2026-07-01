@@ -8,7 +8,7 @@ if (!token) {
 document.getElementById("username").textContent = name;
 
 function loadDocuments() {
-  fetch("https://ai-document-chatbot-a0pk.onrender.com/api/docs/list", {
+  fetch("http://127.0.0.1:5000/api/docs/list", {
     headers: { Authorization: "Bearer " + token },
   })
     .then((r) => r.json())
@@ -23,16 +23,16 @@ function loadDocuments() {
       docs.forEach((doc) => {
         const date = doc.uploaded_at ? doc.uploaded_at.split(" ")[0] : "";
         grid.innerHTML += `
-                <div class="doc-card">
-                    <div class="doc-icon">📄</div>
-                    <div class="doc-name">${doc.original_name}</div>
-                    <div class="doc-date">${date}</div>
-                    <div class="doc-actions">
-                        <button class="btn-chat" onclick="openChat(${doc.id}, '${doc.original_name}')">Chat</button>
-                        <button class="btn-delete-doc" onclick="deleteDoc(${doc.id})">Delete</button>
-                    </div>
-                </div>
-            `;
+          <div class="doc-card">
+            <div class="doc-icon">📄</div>
+            <div class="doc-name">${doc.original_name}</div>
+            <div class="doc-date">${date}</div>
+            <div class="doc-actions">
+              <button class="btn-chat" onclick="openChat(${doc.id}, '${doc.original_name}')">Chat</button>
+              <button class="btn-delete-doc" onclick="deleteDoc(${doc.id})">Delete</button>
+            </div>
+          </div>
+        `;
       });
     });
 }
@@ -47,7 +47,7 @@ function uploadDocument() {
   const formData = new FormData();
   formData.append("file", file);
 
-  fetch("https://ai-document-chatbot-a0pk.onrender.com/api/docs/upload", {
+  fetch("http://127.0.0.1:5000/api/docs/upload", {
     method: "POST",
     headers: { Authorization: "Bearer " + token },
     body: formData,
@@ -57,9 +57,7 @@ function uploadDocument() {
       if (data.doc_id) {
         status.textContent = "Document uploaded successfully!";
         loadDocuments();
-        setTimeout(() => {
-          status.textContent = "";
-        }, 3000);
+        setTimeout(() => { status.textContent = ""; }, 3000);
       } else {
         status.textContent = "Error: " + data.error;
       }
@@ -77,17 +75,12 @@ function openChat(docId, docName) {
 
 function deleteDoc(docId) {
   if (confirm("Delete this document and all its chat history?")) {
-    fetch(
-      "https://ai-document-chatbot-a0pk.onrender.com/api/docs/delete/" + docId,
-      {
-        method: "DELETE",
-        headers: { Authorization: "Bearer " + token },
-      },
-    )
+    fetch("http://127.0.0.1:5000/api/docs/delete/" + docId, {
+      method: "DELETE",
+      headers: { Authorization: "Bearer " + token },
+    })
       .then((r) => r.json())
-      .then(() => {
-        loadDocuments();
-      });
+      .then(() => { loadDocuments(); });
   }
 }
 
